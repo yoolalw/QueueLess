@@ -1,8 +1,8 @@
 namespace queueless.Models
 {
-    public class Productos
+    public class Produtos
     {
-        public Productos(string name, double price)
+        public Produtos(string name, double price)
         {
             Id = Guid.NewGuid();
             Name = name;
