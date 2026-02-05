@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using queueless.Data;
+using queueless.Routes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +19,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
 }
+
+app.UsersRoutes();
 
 app.UseHttpsRedirection();
 app.Run();
