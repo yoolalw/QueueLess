@@ -11,19 +11,44 @@ public static class OrdersRoute
     {
         var route = app.MapGroup("api/orders");
 
-        route.MapPost("/",
-        async (QueuelessContext context,
-               OrdersDto orderDto,
-               List<ordersItensDTO> itemsDto) =>
+        // GET ALL ORDERS
+        route.MapGet("/",
+        async (QueuelessContext context) =>
         {
-            var total = itemsDto.Sum(i => i.quantity * i.unitPrice);
+            var orders = await context.Orders.ToListAsync();
+            return Results.Ok(orders);
+        });
 
-            var order = new Pedidos(orderDto.userId, total);
+        // GET ORDER BY ID
+        route.MapGet("/{id}",
+        async (Guid id, QueuelessContext context) =>
+        {
+            var order = await context.Orders
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+                return Results.NotFound();
+
+            var items = await context.OrderItems
+                .Where(i => i.OrderId == id)
+                .ToListAsync();
+
+            return Results.Ok(new { order, items });
+        });
+
+        // CREATE ORDER + ITEMS
+        route.MapPost("/",
+        async (QueuelessContext context, CreateOrderDto req) =>
+        {
+            var order = new Pedidos(
+                req.userId,
+                req.items.Sum(i => i.quantity * i.unitPrice)
+            );
 
             context.Orders.Add(order);
             await context.SaveChangesAsync();
 
-            foreach (var item in itemsDto)
+            foreach (var item in req.items)
             {
                 var orderItem = new ItensPedidos(
                     order.Id,
@@ -40,11 +65,18 @@ public static class OrdersRoute
             return Results.Ok(order);
         });
 
-        route.MapGet("/",
-        async (QueuelessContext context) =>
+        route.MapPut("/{id}",
+        async (Guid id, CreateOrderDto dto, QueuelessContext context) =>
         {
-            var orders = await context.Orders.ToListAsync();
-            return Results.Ok(orders);
+            var order = await context.Orders.FindAsync(id);
+
+            if (order == null)
+                return Results.NotFound();
+
+            order.Total = dto.items.Sum(i => i.quantity * i.unitPrice);
+
+            await context.SaveChangesAsync();
+            return Results.Ok(order);
         });
     }
 }
