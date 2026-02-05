@@ -44,6 +44,7 @@ body {
   font-size: 50px;
   padding: 20px;
   text-align: center;
+  
 
 }
 
@@ -52,6 +53,10 @@ body {
   color:#976e65;
   font-size: 20px;
   text-align: center;
+}
+.login-container *:not(.queue-icon) {
+  position: relative;
+  z-index: 1;
 }
 
 /*box input*/
@@ -131,4 +136,23 @@ textarea{
 
 .required-field{
   color: rgb(218, 59, 48);
+}
+
+.image-icon {
+  position: absolute;
+  bottom: 0px; 
+  right: 3%;
+  width: 100px; 
+  height: auto;
+  z-index: 10; 
+}
+
+.queue-icon{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  height: auto;
+  z-index: -1; 
 }
