@@ -23,6 +23,7 @@ if (app.Environment.IsDevelopment())
 
 app.UsersRoutes();
 app.ProductsRoutes();
+app.OrdersRoutes();
 
 app.UseHttpsRedirection();
 app.Run();
