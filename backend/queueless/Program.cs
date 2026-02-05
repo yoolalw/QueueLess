@@ -22,6 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UsersRoutes();
+app.ProductsRoutes();
 
 app.UseHttpsRedirection();
 app.Run();
