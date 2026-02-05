@@ -6,3 +6,5 @@ public record UserDto(
     string password,
     string role
 );
+
+public record LoginRequest(string username, string password);
