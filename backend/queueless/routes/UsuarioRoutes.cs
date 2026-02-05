@@ -12,7 +12,7 @@ public static class UsersRoute
         var route = app.MapGroup("api");
 
         // LOGIN
-        route.MapPost("/Login",
+        route.MapPost("/login",
         async (QueuelessContext context, LoginRequest req) =>
         {
             var user = await context.Users
