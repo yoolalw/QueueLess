@@ -11,7 +11,7 @@ namespace queueless.Models
             Username = username;
             Password = password;
             Role = role;
-            CreatingDT = DateTime.Now;
+            CreatingDT = DateTime.UtcNow;
             IsActive = true;
         }
 

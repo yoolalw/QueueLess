@@ -8,7 +8,7 @@ namespace queueless.Models
             Name = name;
             Price = price;
             IsActive = true;
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public Guid Id { get; set; }

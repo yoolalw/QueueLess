@@ -7,7 +7,7 @@ namespace queueless.Models
             Id = Guid.NewGuid();
             UserId = userId;
             Total = total;
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public Guid Id { get; set; }
